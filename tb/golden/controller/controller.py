@@ -7,6 +7,7 @@ SEED = 12345  # 隨機數種子碼，確保每次產生的測試向量可重複�
 INPUT_FILE = "controller_input_vectors.hex"  # 輸出的 DUT 測試向量檔名
 GOLDEN_FILE = "controller_golden_outputs.hex"  # 輸出的 Golden 正確答案檔名
 
+
 # 控制器 Golden 模型 (Controller Golden Model)
 # 此函數模擬 RTL 組合邏輯與狀態計數器的行為：
 # 1. 計算當前週期的控制輸出訊號 (o_in_fifo_rden, o_calc_en 等)
@@ -69,6 +70,7 @@ def controller_model(
         next_calc_count,
     )
 
+
 # 產生定向測試向量 (Generate deterministic directed tests)
 # 涵蓋各種特定的邊界條件 (Corner Cases) 與臨界情境
 def generate_directed_tests():
@@ -115,6 +117,7 @@ def generate_directed_tests():
 
     return tests
 
+
 # 主程式：生成所有測試向量並寫入檔案 (Main Vector Generation)
 def generate_vectors():
     # 設定隨機數種子以保證可重複性
@@ -124,7 +127,6 @@ def generate_vectors():
 
     # 1. 加入定向測試向量 (Directed tests)
     input_vectors.extend(generate_directed_tests())
-
 
     # 2. 加入隨機測試向量 (Random tests)
     for _ in range(NUM_RANDOM_CYCLES):
@@ -137,14 +139,16 @@ def generate_vectors():
         out_full = random.randint(0, 1)
         mac_result_valid = random.randint(0, 1)
 
-        input_vectors.append((
-            a_empty,
-            b_empty,
-            a_data_valid,
-            b_data_valid,
-            out_full,
-            mac_result_valid,
-        ))
+        input_vectors.append(
+            (
+                a_empty,
+                b_empty,
+                a_data_valid,
+                b_data_valid,
+                out_full,
+                mac_result_valid,
+            )
+        )
 
     # 3. 逐筆計算 Golden 輸出並寫入檔案
     calc_count = 0  # 初始化內置運算計數器
@@ -213,6 +217,7 @@ def generate_vectors():
     print(f"Input file    : {INPUT_FILE}")
     print(f"Golden file   : {GOLDEN_FILE}")
     print("==============================================")
+
 
 if __name__ == "__main__":
     generate_vectors()

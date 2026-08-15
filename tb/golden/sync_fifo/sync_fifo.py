@@ -6,21 +6,21 @@ def generate_test_vectors(num_operations=500, depth=8):
     # 使用雙端佇列 (deque) 作為 Golden Model
     golden_fifo = collections.deque()
 
-    with open("input_vectors.hex", "w") as f_in, \
-         open("golden_outputs.hex", "w") as f_gold:
-
+    with open("input_vectors.hex", "w") as f_in, open(
+        "golden_outputs.hex", "w"
+    ) as f_gold:
         for i in range(num_operations):
             # 1. 隨機決定 wr_en 與 rd_en (測試所有組合: 00, 01, 10, 11)
             wr_en = 1 if random.random() < 0.55 else 0
             rd_en = 1 if random.random() < 0.45 else 0
-            din   = random.randint(0, 0xFFFFFFFF)
+            din = random.randint(0, 0xFFFFFFFF)
 
             # 2. 判斷實際硬體是否允許寫入與讀出
-            is_full  = (len(golden_fifo) == depth)
-            is_empty = (len(golden_fifo) == 0)
+            is_full = len(golden_fifo) == depth
+            is_empty = len(golden_fifo) == 0
 
             actual_write = wr_en and not is_full
-            actual_read  = rd_en and not is_empty
+            actual_read = rd_en and not is_empty
 
             # 3. 更新 Golden Model
             if actual_read:
@@ -39,13 +39,14 @@ def generate_test_vectors(num_operations=500, depth=8):
         while len(golden_fifo) > 0:
             wr_en = 0
             rd_en = 1
-            din   = 0
+            din = 0
 
             expected_dout = golden_fifo.popleft()
             f_gold.write(f"{expected_dout:08X}\n")
             f_in.write(f"{wr_en} {rd_en} {din:08X}\n")
 
     print(f"測試向量已生成！包含 {num_operations} 筆隨機操作 + 尾端清空操作。")
+
 
 if __name__ == "__main__":
     generate_test_vectors()

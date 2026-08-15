@@ -21,26 +21,21 @@ def to_signed(value, bits):
     value &= (1 << bits) - 1
 
     if value & (1 << (bits - 1)):
-        value -= (1 << bits)
+        value -= 1 << bits
 
     return value
 
 
 def generate_mac_vectors(
-    num_groups=NUM_MAC_GROUPS,
-    terms_per_group=TERMS_PER_GROUP,
-    seed=12345
+    num_groups=NUM_MAC_GROUPS, terms_per_group=TERMS_PER_GROUP, seed=12345
 ):
     random.seed(seed)
 
-    with open(INPUT_FILE, "w") as f_in, \
-         open(GOLDEN_FILE, "w") as f_gold:
-
+    with open(INPUT_FILE, "w") as f_in, open(GOLDEN_FILE, "w") as f_gold:
         total_vectors = 0
         total_results = 0
 
         for group in range(num_groups):
-
             # 產生一組 10 筆 MAC
             accumulator = 0
 
@@ -56,13 +51,11 @@ def generate_mac_vectors(
 
                 # 隨機產生 signed 32-bit data
                 a = random.randint(
-                    -(1 << (DATA_WIDTH - 1)),
-                    (1 << (DATA_WIDTH - 1)) - 1
+                    -(1 << (DATA_WIDTH - 1)), (1 << (DATA_WIDTH - 1)) - 1
                 )
 
                 b = random.randint(
-                    -(1 << (DATA_WIDTH - 1)),
-                    (1 << (DATA_WIDTH - 1)) - 1
+                    -(1 << (DATA_WIDTH - 1)), (1 << (DATA_WIDTH - 1)) - 1
                 )
 
                 # 計算 signed multiplication
@@ -75,10 +68,7 @@ def generate_mac_vectors(
                     accumulator = product_68
                 else:
                     accumulator = accumulator + product_68
-                    accumulator = to_signed(
-                        accumulator,
-                        ACC_WIDTH
-                    )
+                    accumulator = to_signed(accumulator, ACC_WIDTH)
 
                 # 第 10 筆時產生 Golden Result
                 #
@@ -111,25 +101,19 @@ def generate_mac_vectors(
             # calc_en = 0
             #
             # 讓 DUT 清除 valid
-            f_in.write(
-                "0 0 00000000 00000000 1\n"
-            )
+            f_in.write("0 0 00000000 00000000 1\n")
 
             total_vectors += 1
 
             # Golden output：
             # 只在第 10 筆產生一次
-            f_gold.write(
-                f"{to_unsigned(accumulator, ACC_WIDTH):017X}\n"
-            )
+            f_gold.write(f"{to_unsigned(accumulator, ACC_WIDTH):017X}\n")
 
             total_results += 1
 
         # 額外測試 idle cycles
         for _ in range(10):
-            f_in.write(
-                "0 0 00000000 00000000 1\n"
-            )
+            f_in.write("0 0 00000000 00000000 1\n")
             total_vectors += 1
 
     print("==========================================")
