@@ -1,6 +1,7 @@
 import collections
 import random
 
+
 def generate_test_vectors(num_operations=500, depth=8):
     # 使用雙端佇列 (deque) 作為 Golden Model
     golden_fifo = collections.deque()
@@ -39,7 +40,7 @@ def generate_test_vectors(num_operations=500, depth=8):
             wr_en = 0
             rd_en = 1
             din   = 0
-            
+
             expected_dout = golden_fifo.popleft()
             f_gold.write(f"{expected_dout:08X}\n")
             f_in.write(f"{wr_en} {rd_en} {din:08X}\n")

@@ -14,7 +14,8 @@ def to_unsigned(value, bits):
 
 def generate_patterns(num_patterns=1000, group_size=10):
     """
-    生成 32-bit signed input_a、input_b，並產生每 group_size 筆資料的 MAC Golden Result。
+    生成 32-bit signed input_a、input_b，
+    並產生每 group_size 筆資料的 MAC Golden Result。
 
     """
 

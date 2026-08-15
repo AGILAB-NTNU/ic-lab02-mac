@@ -121,12 +121,11 @@ def generate_vectors():
     random.seed(SEED)
 
     input_vectors = []
-    golden_vectors = []
 
     # 1. 加入定向測試向量 (Directed tests)
     input_vectors.extend(generate_directed_tests())
 
-   
+
     # 2. 加入隨機測試向量 (Random tests)
     for _ in range(NUM_RANDOM_CYCLES):
         a_empty = random.randint(0, 1)
@@ -150,10 +149,7 @@ def generate_vectors():
     # 3. 逐筆計算 Golden 輸出並寫入檔案
     calc_count = 0  # 初始化內置運算計數器
 
-    with (
-        open(INPUT_FILE, "w") as f_in,
-        open(GOLDEN_FILE, "w") as f_gold,
-    ):
+    with open(INPUT_FILE, "w") as f_in, open(GOLDEN_FILE, "w") as f_gold:
         for vector in input_vectors:
             (
                 a_empty,
