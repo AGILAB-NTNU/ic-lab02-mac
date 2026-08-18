@@ -10,7 +10,7 @@
                 <mxCell id="155" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;strokeColor=inherit;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=19;fontFamily=Times New Roman;spacing=1;strokeOpacity=100;fillOpacity=20;" parent="10" vertex="1">
                     <mxGeometry width="810" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="156" value="controller" style="shape=partialRectangle;connectable=0;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;fontSize=25;fontFamily=Times New Roman;spacing=10;strokeOpacity=100;fillOpacity=20;align=left;fontStyle=1" parent="155" vertex="1">
+                <mxCell id="156" value="pe_mac_controller" style="shape=partialRectangle;connectable=0;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;fontSize=25;fontFamily=Times New Roman;spacing=10;strokeOpacity=100;fillOpacity=20;align=left;fontStyle=1" parent="155" vertex="1">
                     <mxGeometry width="320" height="70" as="geometry">
                         <mxRectangle width="320" height="70" as="alternateBounds"/>
                     </mxGeometry>
